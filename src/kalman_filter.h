@@ -23,6 +23,15 @@ public:
   // measurement covariance matrix
   Eigen::MatrixXd R_;
 
+  // identity matrix
+  Eigen::MatrixXd I_;
+
+  // uncertainty-measurement common basis relation update normalized by S
+  Eigen::MatrixXd K_;
+
+  // scalar product of the projection of uncertainty and measurement terms + measurement noise term R
+  Eigen::MatrixXd S_;
+
   /**
    * Constructor
    */
