@@ -54,8 +54,7 @@ FusionEKF::FusionEKF() {
   H_laser_ << 1, 0, 0, 0,
               0, 1, 0, 0;
 
-  MatrixXd I_;
-  I_ = MatrixXd::Identity(4, 4);
+  ekf_.I_ = MatrixXd::Identity(4, 4);
 
   MatrixXd S_;
   S_ = MatrixXd(4, 4);
