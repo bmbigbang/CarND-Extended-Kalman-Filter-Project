@@ -23,18 +23,15 @@ void KalmanFilter::Predict() {
     * predict the state
   */
   // assume no external motion u for the position prediciton x_
+
   x_ = (F_ * x_);
-  P_ = F_ * P_ * F_.transpose();
+  P_ = (F_ * P_ * F_.transpose()) + Q_;
 }
 
-void KalmanFilter::Update(const VectorXd &z) {
+void KalmanFilter::Update(const VectorXd &z, MatrixXd &H_, MatrixXd &R_) {
   /**
     * update the state by using Kalman Filter equations
   */
-
-  I_ = MatrixXd::Identity(4, 4);
-  S_ = MatrixXd(4, 4);
-  K_ = MatrixXd(4, 4);
 
   // KF Measurement update step
   S_ = H_ * P_ * H_.transpose() + R_;
@@ -44,9 +41,15 @@ void KalmanFilter::Update(const VectorXd &z) {
   P_ = (I_ - (K_ * H_)) * P_;
 }
 
-void KalmanFilter::UpdateEKF(const VectorXd &z) {
+void KalmanFilter::UpdateEKF(const VectorXd &z, MatrixXd &H_, MatrixXd &R_) {
   /**
   TODO:
     * update the state by using Extended Kalman Filter equations
   */
+
+  S_ = H_ * P_ * H_.transpose() + R_;
+  K_ = P_ * H_.transpose() * S_.inverse();
+
+  x_ = x_ + (K_ * (z - (H_ * x_)));
+  P_ = (I_ - (K_ * H_)) * P_;
 }
