@@ -43,7 +43,6 @@ void KalmanFilter::Update(const VectorXd &z, MatrixXd &H_, MatrixXd &R_) {
 
 void KalmanFilter::UpdateEKF(const VectorXd &z, MatrixXd &H_, MatrixXd &R_) {
   /**
-  TODO:
     * update the state by using Extended Kalman Filter equations
   */
 
