@@ -104,6 +104,12 @@ int main(int argc, char* argv[]) {
       iss >> ro;
       iss >> phi;
       iss >> ro_dot;
+      if (phi > 3.14) {
+        phi = phi - (2 * 3.1415);
+      }
+      else if (phi < -3.14) {
+        phi = phi - (2 * 3.1415);
+      }
       meas_package.raw_measurements_ << ro, phi, ro_dot;
       iss >> timestamp;
       meas_package.timestamp_ = timestamp;

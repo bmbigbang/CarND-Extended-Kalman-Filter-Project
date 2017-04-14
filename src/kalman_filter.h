@@ -32,6 +32,9 @@ public:
   // scalar product of the projection of uncertainty and measurement terms + measurement noise term R
   Eigen::MatrixXd S_;
 
+  // polar coordinate placeholder
+  Eigen::VectorXd m_;
+
   /**
    * Constructor
    */
@@ -71,7 +74,7 @@ public:
    * Updates the state by using Extended Kalman Filter equations
    * @param z The measurement at k+1
    */
-  void UpdateEKF(const Eigen::VectorXd &z, Eigen::MatrixXd &H_, Eigen::MatrixXd &R_);
+  void UpdateEKF(const Eigen::VectorXd &z, Eigen::VectorXd &m_, Eigen::MatrixXd &H_, Eigen::MatrixXd &R_);
 
 };
 

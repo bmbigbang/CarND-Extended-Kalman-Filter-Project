@@ -53,21 +53,21 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   MatrixXd Hj = MatrixXd(3, 4);
 
   //recover state parameters
-  double px = x_state(0);
-  double py = x_state(1);
-  double vx = x_state(2);
-  double vy = x_state(3);
+  float px = x_state(0);
+  float py = x_state(1);
+  float vx = x_state(2);
+  float vy = x_state(3);
 
   //check division by zero
-  if (px <= 0.0001) {
-    px = 0.0001;
+  if (px <= 0.00001) {
+    px = 0.00001;
   }
-  if (py <= 0.0001) {
-    py = 0.0001;
+  if (py <= 0.00001) {
+    py = 0.00001;
   }
 
   //compute the Jacobian matrix
-  double sum_sqs = pow(px, 2) + pow(py, 2);
+  float sum_sqs = pow(px, 2) + pow(py, 2);
   Hj(0, 0) = px / sqrt(sum_sqs);
   Hj(0, 1) = py / sqrt(sum_sqs);
   Hj(0, 2) = 0;
