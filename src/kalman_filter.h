@@ -68,13 +68,13 @@ public:
    * Updates the state by using standard Kalman Filter equations
    * @param z The measurement at k+1
    */
-  void Update(const Eigen::VectorXd &z, Eigen::MatrixXd &H_, Eigen::MatrixXd &R_);
+  void Update(const Eigen::VectorXd &z, Eigen::MatrixXd &H_laser_, Eigen::MatrixXd &R_laser_);
 
   /**
    * Updates the state by using Extended Kalman Filter equations
    * @param z The measurement at k+1
    */
-  void UpdateEKF(const Eigen::VectorXd &z, Eigen::VectorXd &m_, Eigen::MatrixXd &H_, Eigen::MatrixXd &R_);
+  void UpdateEKF(const Eigen::VectorXd &z, Eigen::VectorXd &m_, Eigen::MatrixXd &Hj_, Eigen::MatrixXd &R_radar_);
 
 };
 

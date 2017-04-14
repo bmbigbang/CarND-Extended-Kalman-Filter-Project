@@ -23,13 +23,13 @@ FusionEKF::FusionEKF() {
   Hj_ = MatrixXd(3, 4);
 
   //measurement covariance matrix - laser
-  R_laser_ << 0.0225, 0,
-              0, 0.0225;
+  R_laser_ << 0.001, 0,
+              0, 0.001;
 
   //measurement covariance matrix - radar
-  R_radar_ << 0.09, 0, 0,
-              0, 0.0009, 0,
-              0, 0, 0.09;
+  R_radar_ << 100, 0, 0,
+              0, 1000, 0,
+              0, 0, 70;
 
   // process noise covariance matrix
   ekf_.Q_ = MatrixXd(4, 4);
@@ -44,9 +44,6 @@ FusionEKF::FusionEKF() {
   // initialize values for the object covariance matrix
   ekf_.P_ = MatrixXd(4, 4);
 
-  // set the linear laser measurement matrix
-  H_laser_ << 1, 0, 0, 0,
-              0, 1, 0, 0;
   ekf_.I_ = MatrixXd::Identity(4, 4);
 
   // initialize place holders for kalman filter calculation
@@ -75,10 +72,13 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     cout << "EKF: " << endl;
     ekf_.x_ = VectorXd(4);
     ekf_.m_ = VectorXd(3);
-    ekf_.P_ << 1000, 0, 0, 0,
-               0, 1000, 0, 0,
-               0, 0, 10000, 0,
-               0, 0, 0, 10000;
+    ekf_.P_ << 1, 0, 2, 0,
+               0, 1, 0, 2,
+               2, 0, 100000, 0,
+               0, 2, 0, 100000;
+    // set the linear laser measurement matrix
+    H_laser_ << 1, 0, 0, 0,
+                0, 1, 0, 0;
 
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
       /**
