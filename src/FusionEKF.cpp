@@ -128,8 +128,11 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
               0, (noise_ay * pow(dt, 4)) / 4, 0, (noise_ay * pow(dt, 3)) / 2,
               (noise_ax * pow(dt, 3)) / 2, 0, (noise_ax * pow(dt, 2)), 0,
               0, (noise_ay * pow(dt, 3)) / 2, 0, (noise_ay * pow(dt, 2));
-
-  ekf_.Predict();
+  // avoid predicting twice if the measurements coincide
+  if ( dt > 0.001 )
+  {
+    ekf_.Predict();
+  }
 
   /*****************************************************************************
    *  Update

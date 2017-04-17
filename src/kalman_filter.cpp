@@ -32,10 +32,10 @@ void KalmanFilter::Update(const VectorXd &z, MatrixXd &H_laser_, MatrixXd &R_las
   /**
     * update the state by using Kalman Filter equations
   */
-
+  MatrixXd Ht_ = H_laser_.transpose();
   // KF Measurement update step
-  S_ = H_laser_ * P_ * H_laser_.transpose() + R_laser_;
-  K_ = P_ * H_laser_.transpose() * S_.inverse();
+  S_ = H_laser_ * P_ * Ht_ + R_laser_;
+  K_ = P_ * Ht_ * S_.inverse();
 
   x_ = x_ + (K_ * (z - (H_laser_ * x_)));
   P_ = (I_ - (K_ * H_laser_)) * P_;
@@ -45,9 +45,9 @@ void KalmanFilter::UpdateEKF(const VectorXd &z, VectorXd &m_, MatrixXd &Hj_, Mat
   /**
     * update the state by using Extended Kalman Filter equations
   */
-
-  S_ = Hj_ * P_ * Hj_.transpose() + R_radar_;
-  K_ = P_ * Hj_.transpose() * S_.inverse();
+  MatrixXd Ht_ = Hj_.transpose();
+  S_ = Hj_ * P_ * Ht_ + R_radar_;
+  K_ = P_ * Ht_ * S_.inverse();
 
   x_ = x_ + (K_ * (z - m_));
   P_ = (I_ - (K_ * Hj_)) * P_;
